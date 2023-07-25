@@ -13,7 +13,7 @@ public class Personaje {
 	private boolean irDer,irIzq,saltar,puedeMoverse,estaSaltando = false;
 	
 	public Personaje() {
-		spr = new Imagen("esqueletoPjVin1.png");
+		spr = new Imagen("PjVin.png");
 		spr.ajustarTamano(3);
 	}
 	public float getX() {
