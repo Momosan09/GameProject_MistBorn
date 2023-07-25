@@ -21,8 +21,8 @@ public class Imagen {
 	public void setTransparencia(float alpha) {
 		s.setAlpha(alpha);
 	}
-
-	public void actualizar(float x,float y) {
+	
+	public void setPosicion(float x,float y) {
 		s.setPosition(x, y);
 	}
 	public void ajustarTamano(float tamano) {

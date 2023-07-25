@@ -17,12 +17,16 @@ public class PantallaCarga implements Screen {
 	public void render(float delta) {
 		Render.limpiarPantalla();
 		fondo.setTransparencia(a);
-		procesarFadePantalla();
+		termina = procesarFadePantalla();
 		Render.batch.begin();
 		fondo.draw();
 		Render.batch.end();
+		if(termina) {
+			Render.app.setScreen(new PantallaPvP());
+		}
+		
 	}
-	private void procesarFadePantalla() {
+	private boolean procesarFadePantalla() {
 		if (!terminoFadeIn) {
 			a += 0.007f;
 			if (a > 1) {
@@ -40,6 +44,7 @@ public class PantallaCarga implements Screen {
 				contEspera += 0.01;
 			}
 		}
+		return termina;
 	}
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub

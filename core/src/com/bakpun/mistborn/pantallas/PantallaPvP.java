@@ -13,6 +13,7 @@ public class PantallaPvP implements Screen{
 	Imagen fondo;
 	Personaje pj;
 	OrthographicCamera cam;
+	
 	public void show() {
 		int alto = Gdx.graphics.getHeight(),ancho = Gdx.graphics.getWidth();
 		fondo = new Imagen("background.png");

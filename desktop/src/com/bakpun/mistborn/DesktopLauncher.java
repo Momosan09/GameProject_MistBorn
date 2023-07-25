@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("MistBorn");
-		config.setWindowedMode(1280, 720);
+		config.setWindowedMode(1280, 728);
 		new Lwjgl3Application(new MistBorn(), config);
 	}
 }
