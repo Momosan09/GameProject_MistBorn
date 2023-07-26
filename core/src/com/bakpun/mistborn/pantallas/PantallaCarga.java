@@ -15,7 +15,7 @@ public class PantallaCarga implements Screen {
 		fondo.setTransparencia(0.5f);
 	}
 	public void render(float delta) {
-		Render.limpiarPantalla();
+		Render.limpiarPantalla(1,1,1);
 		fondo.setTransparencia(a);
 		termina = procesarFadePantalla();
 		Render.batch.begin();

@@ -3,6 +3,7 @@ package com.bakpun.mistborn.elementos;
 import com.badlogic.gdx.Gdx;
 
 import com.badlogic.gdx.Input.Keys;
+import com.bakpun.mistborn.utiles.Recursos;
 
 public class Personaje {
 	//Faltan las animaciones de correr y quieto.
@@ -13,7 +14,7 @@ public class Personaje {
 	private boolean irDer,irIzq,saltar,puedeMoverse,estaSaltando = false;
 	
 	public Personaje() {
-		spr = new Imagen("PjVin.png");
+		spr = new Imagen(Recursos.PERSONAJE_VIN);
 		spr.ajustarTamano(3);
 	}
 	public float getX() {
@@ -28,11 +29,11 @@ public class Personaje {
 		irDer = Gdx.input.isKeyPressed(Keys.D);
 		irIzq = Gdx.input.isKeyPressed(Keys.A);
 		saltar = (Gdx.input.isKeyJustPressed(Keys.SPACE) && !estaSaltando);
-		puedeMoverse = (irDer != irIzq);
+		puedeMoverse = (irDer != irIzq);	//Si el jugador toca las 2 teclas a la vez no va a poder moverse.
 		
-		calcularSalto();
-		calcularMovimiento();
-		calcularLimites();
+		calcularSalto();	//Calcula el salto con la gravedad.
+		calcularMovimiento();	//Calcula el movimiento. Tendria que cambiarlo por la clase Entradas (creo).
+		calcularLimites();	//Calcula e impide que el jugador no se salga del plano visible.
 
 		spr.setPosicion(x,y);
 		spr.draw();

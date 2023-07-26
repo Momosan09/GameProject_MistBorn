@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.bakpun.mistborn.elementos.Imagen;
 import com.bakpun.mistborn.elementos.Personaje;
+import com.bakpun.mistborn.utiles.Recursos;
 import com.bakpun.mistborn.utiles.Render;
 
 public class PantallaPvP implements Screen{
@@ -16,18 +17,18 @@ public class PantallaPvP implements Screen{
 	
 	public void show() {
 		int alto = Gdx.graphics.getHeight(),ancho = Gdx.graphics.getWidth();
-		fondo = new Imagen("background.png");
+		fondo = new Imagen(Recursos.FONDO_PVP);
 		pj = new Personaje();
-		cam = new OrthographicCamera(alto,ancho);
+		cam = new OrthographicCamera(alto,ancho);	//Creo una camara para hacer el viewport.
 	}
 
 	public void render(float delta) {
-		Render.limpiarPantalla();
-		cam.update();
+		Render.limpiarPantalla(1,1,1);
+		cam.update();	//Hay que updatear la camara si o si.
 		Render.batch.setProjectionMatrix(cam.combined);
 		Render.batch.begin();
-		fondo.draw();
-		pj.update();
+		fondo.draw();	//Dibujo el fondo.
+		pj.update(); 	//Updateo los movimientos del jugador.
 		Render.batch.end();
 		//Para hacer que la camara siga al pj, en este juego no la necesitamos, pero ahi esta.
 		//cam.position.set(pj.getX(), pj.getY(), 0);
@@ -35,7 +36,7 @@ public class PantallaPvP implements Screen{
 
 	@Override
 	public void resize(int width, int height) {
-		cam.setToOrtho(false, width, height);
+		cam.setToOrtho(false, width, height);	// Utilizo esta funcion para hacer el viewport, no funcionaria sino.
 	}
 
 	@Override
@@ -60,8 +61,4 @@ public class PantallaPvP implements Screen{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-	
-	
 }
