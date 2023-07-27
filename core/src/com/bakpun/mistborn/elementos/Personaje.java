@@ -3,6 +3,7 @@ package com.bakpun.mistborn.elementos;
 import com.badlogic.gdx.Gdx;
 
 import com.bakpun.mistborn.io.Entradas;
+import com.bakpun.mistborn.utiles.Config;
 import com.bakpun.mistborn.utiles.Recursos;
 
 public class Personaje {
@@ -40,8 +41,8 @@ public class Personaje {
 		spr.draw();
 	}
 	private void calcularLimites() {
-		if(x >= Gdx.graphics.getWidth()) {
-			x = Gdx.graphics.getWidth();
+		if(x >= Config.ANCHO) {
+			x = Config.ANCHO;
 		}
 		if(x <= 0) {
 			x = 0;

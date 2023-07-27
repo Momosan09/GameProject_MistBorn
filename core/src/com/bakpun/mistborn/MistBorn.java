@@ -2,11 +2,10 @@ package com.bakpun.mistborn;
 
 import com.bakpun.mistborn.elementos.*;
 
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.bakpun.mistborn.pantallas.PantallaCarga;
-import com.bakpun.mistborn.pantallas.PantallaMenu;
-import com.bakpun.mistborn.pantallas.PantallaPvP;
 import com.bakpun.mistborn.utiles.Render;
 
 public class MistBorn extends Game {
@@ -14,12 +13,11 @@ public class MistBorn extends Game {
 	
 	public void create() {
 		pj = new Personaje();
+		Render.cancionMenu.play();
 		Render.app = this;
 		Render.batch = new SpriteBatch();
-		//Pantalla de carga que hay que hacerla y menu ya se esta haciendo.
-		//this.setScreen(new PantallaCarga());
-		this.setScreen(new PantallaMenu());
-		//this.setScreen(new PantallaPvP());
+		//Pantalla de carga que hay que hacerla.
+		this.setScreen(new PantallaCarga());
 	}
 
 	public void render () {

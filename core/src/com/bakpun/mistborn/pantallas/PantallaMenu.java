@@ -1,7 +1,9 @@
 package com.bakpun.mistborn.pantallas;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,37 +12,36 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.bakpun.mistborn.elementos.Imagen;
 import com.bakpun.mistborn.elementos.Texto;
 import com.bakpun.mistborn.io.Entradas;
+import com.bakpun.mistborn.utiles.Config;
 import com.bakpun.mistborn.utiles.Recursos;
 import com.bakpun.mistborn.utiles.Render;
 
-public class PantallaMenu implements Screen {
+//Tengo que ver la forma de anadir el sonido cuando se selecciona opcion con el mouse y buscar un sonido para cuando toca enter o click.
 
-	/*
-	 Falta poner al rectangulo la opacidad, y tamb la interaccion.
-	*/
+public class PantallaMenu implements Screen {
+	private final String textos[] = {"Jugar","Opciones","Salir"};
+	private final float VELOCIDAD_CAMARA = 1.2f;
+	private final int MAX_OPC = 3,MIN_OPC = 1;
 	private Texto[] opciones = new Texto[3];
-	private String textos[] = {"Jugar","Opciones","Salir"};
 	private Imagen fondo;
-	private ShapeRenderer figura;
+	private ShapeRenderer figuraMenu/*,colision*/;
 	private OrthographicCamera cam;
 	private OrthographicCamera camEstatica;
-	private final float VELOCIDAD_CAMARA = 1.2f;
-	private float tiempoMapa = 150f, contMapa = 0f, opacidad = 1f;
-	private int seleccion = 1,alto,ancho;
-	private final int MAX_OPC = 3,MIN_OPC = 1;
-	private boolean reiniciarCam = false, terminoPrimeraParte = false;
+	private Sound sfxOpcion;
 	private Entradas entradas;
-	private static float tiempo;
-	
+	private float tiempoMapa = 150f, contMapa = 0f, opacidad = 1f,tiempo;
+	private int seleccion = 1;
+	private boolean reiniciarCam = false, terminoPrimeraParte = false,estaSobreOpcion = false;
 	
 	public void show() {
-		alto = Gdx.graphics.getHeight();ancho = Gdx.graphics.getWidth();
+		sfxOpcion = Gdx.audio.newSound(Gdx.files.internal(Recursos.SONIDO_OPCION_MENU));
 		entradas = new Entradas();
-		Gdx.input.setInputProcessor(entradas);
 		fondo = new Imagen(Recursos.FONDO_MENU);
-		figura = new ShapeRenderer();
-		cam = new OrthographicCamera(alto, ancho);	//Camara para el fondo que se mueve.
-		camEstatica = new OrthographicCamera(alto,ancho);	//Camara para las opciones del menu (estaticas).
+		figuraMenu = new ShapeRenderer();
+		//colision = new ShapeRenderer();
+		cam = new OrthographicCamera(Config.ALTO,Config.ANCHO);	//Camara para el fondo que se mueve.
+		camEstatica = new OrthographicCamera(Config.ALTO,Config.ANCHO);	//Camara para las opciones del menu (estaticas).
+		Gdx.input.setInputProcessor(entradas);
 		cargarTexto();
 	}
 
@@ -60,26 +61,72 @@ public class PantallaMenu implements Screen {
 		colorearOpcion();
 		camEstatica.update();
 		Render.batch.setProjectionMatrix(camEstatica.combined);	//segundo bloque para hacer la camara estatica.
-		mostrarFigura();	//Dibuja un rectangulo que vendria a ser donde estan las opciones.
+		dibujarFigura();	//Dibuja un rectangulo que vendria a ser donde estan las opciones.
 		Render.batch.begin();
 		for (int i = 0; i < opciones.length; i++) {
 			opciones[i].draw();		//Dibuja las opciones.
 		}
 		Render.batch.end();
+		calcularColisionMouse();
+		calcularEntradasConOpciones();
 	}
 
-	private void mostrarFigura() {
-		figura.setProjectionMatrix(Render.batch.getProjectionMatrix());	 // Viewport, esto dentro del Render de la camEstatica.
-		figura.begin(ShapeType.Filled);
-		figura.rect(100, 200, (opciones[1].getAncho()+100), Gdx.graphics.getHeight() - 50);	//No me anda poner alto, tendria que hacer una clase config,															
-		figura.setColor(Color.ORANGE);												//que me de el ancho,alto.
-		figura.end();
+	/*Este metodo calcula cuando tocara una opcion, hay mucho lio en el segundo if porque pasaba que si una opcion estaba seleccionada 
+	pero el mouse no estaba sobre la misma y vos clickeabas,la opcion se accionaba,cosa que esta mal.*/
+	private void calcularEntradasConOpciones() {													
+		if(entradas.isEnter() || entradas.isMouseClick()) { 
+			if((seleccion==1 && entradas.isEnter()) || (seleccion == 1 && (entradas.isMouseClick() && estaSobreOpcion))) {
+				Render.cancionMenu.pause();		//Pauso la cancion del menu.
+				Render.app.setScreen(new PantallaPvP());
+			}else if(seleccion == 3) {
+				Gdx.app.exit();
+			}
+		}
+	}
+
+	private void calcularColisionMouse() {
+		/*colision.setProjectionMatrix(camEstatica.combined);
+		colision.begin(ShapeType.Line);
+		colision.setColor(Color.RED);
+		for (int i = 0; i < opciones.length; i++) {
+			colision.rect(opciones[i].getX(), opciones[i].getY()-opciones[i].getAlto(), opciones[i].getAncho(), opciones[i].getAlto());
+		}
+		colision.end();*/
+		//Lo dejo comentado, porque son los rectangulos de las opciones (colisiones).
+		//Me surge un problema que es cuando amplio la ventana, las colision se muestran bien pero los colores de las opciones se buguean.
+		
+		int contSobreOpcion = 0;
+		
+		//Dentro de este for hay un if que es largo, sirve para calcular cuando el mouse esta sobre el rectangulo (osea la opcion).
+		// Se podria usar me parece el metodo overlaps con los rectangulos de lo comentado arriba, pero la verdad que no indaque.
+		for (int i = 0; i < opciones.length; i++) {
+			if((entradas.getMouseX() >= opciones[i].getX() && entradas.getMouseX() <= (opciones[i].getX()+opciones[i].getAncho())) && 
+					(entradas.getMouseY() >= (opciones[i].getY() - opciones[i].getAlto()) && entradas.getMouseY() <= opciones[i].getY())) {
+				seleccion = (i+1);
+				contSobreOpcion++;
+			}
+			if(contSobreOpcion > 0) {
+				estaSobreOpcion = true;
+			}else {
+				estaSobreOpcion = false;
+			}
+		}
+	}
+
+	private void dibujarFigura() {
+		Gdx.gl.glEnable(GL30.GL_BLEND);		//Esto para que funcione el canal alpha de figuraMenu.setColor();
+	    Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+		figuraMenu.setProjectionMatrix(camEstatica.combined);	 // Viewport, esto dentro del Render de la camEstatica.
+		figuraMenu.begin(ShapeType.Filled);
+		figuraMenu.rect(100, 200, (opciones[1].getAncho()+100), Config.ANCHO - 50);	//No me anda poner alto, tendria que hacer una clase config,															
+		figuraMenu.setColor(0,0,0,0.7f);												//que me de el ancho,alto.
+		figuraMenu.end();
 	}
 
 	private void colorearOpcion() {
-		for (int i = 0; i < opciones.length; i++) {
-			if (i == (seleccion-1)) {
-				opciones[i].setColor(Color.YELLOW);
+		for (int i = 0; i < opciones.length; i++) {		//Este metodo hace que la opcion elegida se pinte de x color, diferenciandose de los demas.
+			if (i == (seleccion-1)) {					
+				opciones[i].setColor(Color.RED);
 			} else {
 				opciones[i].setColor(Color.WHITE);
 			}
@@ -90,6 +137,7 @@ public class PantallaMenu implements Screen {
 		tiempo += delta;
 		if(entradas.isAbajo()) {
 			if(tiempo >= 0.2f) {	//Hay un delay para elegir otra opcion.
+				sfxOpcion.play();
 				tiempo = 0;
 				seleccion++;	//Si en este contador se supera el MAX_OPC, la seleccion va a ser igual a la primera opcion.
 				if(seleccion > MAX_OPC) {
@@ -100,6 +148,7 @@ public class PantallaMenu implements Screen {
 		}
 		else if(entradas.isArriba()) {
 			if(tiempo >= 0.2f) {
+				sfxOpcion.play();
 				tiempo = 0;
 				seleccion--;	//Si en este contador es menor que el MIX_OPC, la seleccion va a ser igual a la ultima opcion.
 				if(seleccion < MIN_OPC) {
@@ -182,8 +231,4 @@ public class PantallaMenu implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-	
-	
 }

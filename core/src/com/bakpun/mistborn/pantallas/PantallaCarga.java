@@ -22,9 +22,8 @@ public class PantallaCarga implements Screen {
 		fondo.draw();
 		Render.batch.end();
 		if(termina) {
-			Render.app.setScreen(new PantallaPvP());
+			Render.app.setScreen(new PantallaMenu());
 		}
-		
 	}
 	private boolean procesarFadePantalla() {
 		if (!terminoFadeIn) {

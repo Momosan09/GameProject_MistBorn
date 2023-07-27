@@ -53,6 +53,12 @@ public class Texto {
 	public Vector2 getDimension() {
 		return new Vector2(layout.width,layout.height);
 	}
+	public float getX() {
+		return this.x;
+	}
+	public float getY() {
+		return this.y;
+	}
 	
 	
 	
