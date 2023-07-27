@@ -7,16 +7,24 @@ Proyecto final de la materia "programacion sobre redes".
 - Creamos y cargamos un personaje.
 - Hicimos el moviemiento del personaje (izq,der).
 - Creamos una camara para hacer el viewport (probamos con la misma el seguimiento del pj y el zoom).
-### "empece el menu y el pj salta"
+### "empece el menu y el pj salta" - Fecha: 24/07
 - El personaje salta.
 - Empezamos a hacer el menu.
 - Creamos otra camara para el menu, para hacer un movimiento
 - Cargamos otro personaje (mejor hecho) y cargamos un background para el menu.
 
-### "haciendo movimiento menu y otras cosas"
+### "haciendo movimiento menu y otras cosas" - Fecha: 25/07
 - Hicimos el fade del menu y vuelve a su posicion actual (quedo bien).
 - Avanzamos para la interaccion con el menu.
 - Creacion de las clases Entradas,Texto,Recursos (relacionadas con el punto anterior).
 - Avanzando en las animaciones del personaje (no estan en el repo).
+
+### "terminando menu y clase I/O" - Fecha: 27/07
+
+- Hicimos para que se seleccionen bien las opciones del menu (que cambien de color cuando es seleccionada una,tambien lo del delay).
+- Tambien utilizamos ShapeRenderer para hacer el rectangulo, que va en el menu, falta ajustar la opacidad.
+- Cambiamos las entradas de los personajes respecto al movimiento de estos. Ahora usamos la clase Entradas. (antes usabamos Gdx.input).
+- Terminamos con las animaciones (quieto y correr), falta implementarlas en el juego.
+
 
 *Los objetivos actuales estaran escritos en el codigo, a medida que los vayamos haciendo los borraremos y pondremos otros.*

@@ -2,7 +2,7 @@ package com.bakpun.mistborn.elementos;
 
 import com.badlogic.gdx.Gdx;
 
-import com.badlogic.gdx.Input.Keys;
+import com.bakpun.mistborn.io.Entradas;
 import com.bakpun.mistborn.utiles.Recursos;
 
 public class Personaje {
@@ -11,9 +11,12 @@ public class Personaje {
 	private Imagen spr;
 	private float delta = 0f,x=100,y=200,velocidadImpulso = 0f;
 	private final float VELOCIDAD_X = 400f, IMPULSO_Y = 12f,GRAVEDAD = -20f;
-	private boolean irDer,irIzq,saltar,puedeMoverse,estaSaltando = false;
+	private boolean saltar,puedeMoverse,estaSaltando = false;
+	private Entradas entradas;
 	
 	public Personaje() {
+		entradas = new Entradas();
+		Gdx.input.setInputProcessor(entradas);
 		spr = new Imagen(Recursos.PERSONAJE_VIN);
 		spr.ajustarTamano(3);
 	}
@@ -26,10 +29,8 @@ public class Personaje {
 
 	public void update() {
 		delta = Gdx.graphics.getDeltaTime();
-		irDer = Gdx.input.isKeyPressed(Keys.D);
-		irIzq = Gdx.input.isKeyPressed(Keys.A);
-		saltar = (Gdx.input.isKeyJustPressed(Keys.SPACE) && !estaSaltando);
-		puedeMoverse = (irDer != irIzq);	//Si el jugador toca las 2 teclas a la vez no va a poder moverse.
+		saltar = (entradas.isSaltar() && !estaSaltando);
+		puedeMoverse = (entradas.isIrDer() != entradas.isIrIzq());	//Si el jugador toca las 2 teclas a la vez no va a poder moverse.
 		
 		calcularSalto();	//Calcula el salto con la gravedad.
 		calcularMovimiento();	//Calcula el movimiento. Tendria que cambiarlo por la clase Entradas (creo).
@@ -64,11 +65,11 @@ public class Personaje {
 	}
 	private void calcularMovimiento() {
 		if(puedeMoverse) {
-			if(irDer) {
+			if(entradas.isIrDer()) {
 				//Falta saber como rotar el personaje cuando camina izq,der.
 				//spr.flip(false);
 				x += VELOCIDAD_X * delta;
-			} else if (irIzq){
+			} else if (entradas.isIrIzq()){
 				//spr.flip(true);
 				x -= VELOCIDAD_X * delta;
 			}

@@ -1,9 +1,9 @@
 package com.bakpun.mistborn.elementos;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -24,7 +24,6 @@ public class Texto {
 		parametros = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parametros.size = tamano;
 		parametros.color = color;
-		
 		fuente = generador.generateFont(parametros);
 		layout = new GlyphLayout();
 	}

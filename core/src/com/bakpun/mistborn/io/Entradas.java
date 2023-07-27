@@ -1,21 +1,68 @@
 package com.bakpun.mistborn.io;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 public class Entradas implements InputProcessor{
 	//Hay que desarrollar esta clase para las entradas del usuario.
 
-	@Override
+	private boolean abajo,arriba,irDer,irIzq,saltar;
+	
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
+		
+		if(keycode == Keys.D || keycode == Keys.RIGHT) {
+			irDer = true;
+		}
+		if(keycode == Keys.A || keycode == Keys.LEFT) {
+			irIzq = true;
+		}
+		if(keycode == Keys.SPACE) {
+			saltar = true;
+		}
+		if(keycode == Keys.DOWN) {
+			abajo = true;
+		}
+		if(keycode == Keys.UP) {
+			arriba = true;
+		}
 		return false;
 	}
 
-	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
+		if(keycode == Keys.D || keycode == Keys.RIGHT) {
+			irDer = false;
+		}
+		if(keycode == Keys.A || keycode == Keys.LEFT) {
+			irIzq = false;
+		}
+		if(keycode == Keys.SPACE) {
+			saltar = false;
+		}
+		if(keycode == Keys.DOWN) {
+			abajo = false;
+		}
+		if(keycode == Keys.UP) {
+			arriba = false;
+		}
 		return false;
 	}
+	
+	public boolean isIrDer() {
+		return this.irDer;
+	}
+	public boolean isIrIzq() {
+		return this.irIzq;
+	}
+	public boolean isSaltar() {
+		return this.saltar;
+	}
+	public boolean isAbajo() {
+		return this.abajo;
+	}
+	public boolean isArriba() {
+		return this.arriba;
+	}
+	
 
 	@Override
 	public boolean keyTyped(char character) {
