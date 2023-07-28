@@ -37,4 +37,8 @@ Proyecto final de la materia "programacion sobre redes".
 - Resolvimos un problema que teniamos con la opacidad (canal alpha) del rectangulo del menu.
 - Creamos la clase Config para sacar siempre de ahi el tamaño de la pantalla (ancho,alto).
 
+### "subiendo las animaciones de personaje" - Fecha:28/07
+
+- Hicimos y cargamos las animaciones del personaje al repositorio.
+
 *Los objetivos actuales estaran escritos en el codigo, a medida que los vayamos haciendo los borraremos y pondremos otros.*
