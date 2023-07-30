@@ -25,8 +25,7 @@ public class PantallaMenu implements Screen {
 	private Texto[] opciones = new Texto[3];
 	private Imagen fondo;
 	private ShapeRenderer figuraMenu/*,colision*/;
-	private OrthographicCamera cam;
-	private OrthographicCamera camEstatica;
+	private OrthographicCamera cam,camEstatica;
 	private Sound sfxOpcion;
 	private Entradas entradas;
 	private float tiempoMapa = 150f, contMapa = 0f, opacidad = 1f,tiempo;

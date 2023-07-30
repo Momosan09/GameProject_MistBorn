@@ -1,11 +1,10 @@
 package com.bakpun.mistborn.pantallas;
 
-import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.bakpun.mistborn.elementos.Imagen;
 import com.bakpun.mistborn.elementos.Personaje;
+import com.bakpun.mistborn.utiles.Config;
 import com.bakpun.mistborn.utiles.Recursos;
 import com.bakpun.mistborn.utiles.Render;
 
@@ -16,10 +15,9 @@ public class PantallaPvP implements Screen{
 	OrthographicCamera cam;
 	
 	public void show() {
-		int alto = Gdx.graphics.getHeight(),ancho = Gdx.graphics.getWidth();
 		fondo = new Imagen(Recursos.FONDO_PVP);
 		pj = new Personaje();
-		cam = new OrthographicCamera(alto,ancho);	//Creo una camara para hacer el viewport.
+		cam = new OrthographicCamera(Config.ANCHO,Config.ALTO);	//Creo una camara para hacer el viewport.
 	}
 
 	public void render(float delta) {
@@ -28,7 +26,7 @@ public class PantallaPvP implements Screen{
 		Render.batch.setProjectionMatrix(cam.combined);
 		Render.batch.begin();
 		fondo.draw();	//Dibujo el fondo.
-		pj.update(); 	//Updateo los movimientos del jugador.
+		pj.draw(); 	//Updateo los movimientos del jugador.
 		Render.batch.end();
 		//Para hacer que la camara siga al pj, en este juego no la necesitamos, pero ahi esta.
 		//cam.position.set(pj.getX(), pj.getY(), 0);
@@ -58,7 +56,6 @@ public class PantallaPvP implements Screen{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		
 	}
 }

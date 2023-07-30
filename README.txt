@@ -41,4 +41,10 @@ Proyecto final de la materia "programacion sobre redes".
 
 - Hicimos y cargamos las animaciones del personaje al repositorio.
 
+### "implementacion animaciones, pantalla de carga" - Fecha: 30/07
+
+- Implementamos las animaciones, andan bien (creamos la clase Animacion).
+- Las animaciones las adaptamos al movimiento, si corre, hace la animacion de correr y si esta quieto, hace la animacion de quieto.
+- La pantalla de carga ya esta terminada (añadimos el logo).
+
 *Los objetivos actuales estaran escritos en el codigo, a medida que los vayamos haciendo los borraremos y pondremos otros.*
