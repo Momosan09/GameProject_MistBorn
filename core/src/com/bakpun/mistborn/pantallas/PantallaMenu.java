@@ -38,8 +38,8 @@ public class PantallaMenu implements Screen {
 		fondo = new Imagen(Recursos.FONDO_MENU);
 		figuraMenu = new ShapeRenderer();
 		//colision = new ShapeRenderer();
-		cam = new OrthographicCamera(Config.ALTO,Config.ANCHO);	//Camara para el fondo que se mueve.
-		camEstatica = new OrthographicCamera(Config.ALTO,Config.ANCHO);	//Camara para las opciones del menu (estaticas).
+		cam = new OrthographicCamera();	//Camara para el fondo que se mueve.
+		camEstatica = new OrthographicCamera();	//Camara para las opciones del menu (estaticas).
 		Gdx.input.setInputProcessor(entradas);
 		cargarTexto();
 	}

@@ -17,6 +17,7 @@ public class Personaje {
 	private boolean saltar,puedeMoverse,estaSaltando = false,estaCorriendo,estaQuieto;
 	private Entradas entradas;
 	private float duracion = 0.2f,duracionCorrer = 0.15f;
+	private TextureRegion frameActual;
 	
 	public Personaje() {
 		entradas = new Entradas();
@@ -52,11 +53,11 @@ public class Personaje {
 		spr.setPosicion(x,y);
 		
 		if(estaQuieto) {	//Si esta quieto muestra el fotograma actual de la animacionQuieto.
-			 TextureRegion frameActual = animacionQuieto.getCurrentFrame();
-			 spr.drawAnimacion(frameActual);
+			frameActual = animacionQuieto.getCurrentFrame();
+			spr.drawAnimacion(frameActual,x,y);
 		}else if(estaCorriendo) { 	//Si esta corriendo muestra el fotograma actual de la animacionCorrer.
-			 TextureRegion frameActual = animacionCorrer.getCurrentFrame();
-			 spr.drawAnimacion(frameActual);
+			frameActual = animacionCorrer.getCurrentFrame();
+			spr.drawAnimacion(frameActual,x,y);
 		}
 	}
 	
@@ -86,7 +87,7 @@ public class Personaje {
 		if(x >= Gdx.graphics.getWidth()) {
 			x = Gdx.graphics.getWidth();
 		}
-		if(x <= 0) {
+		if(x <= 0){
 			x = 0;
 		}
 	}
@@ -110,10 +111,9 @@ public class Personaje {
 		if(puedeMoverse) {
 			if(entradas.isIrDer()) {
 				//Falta saber como rotar el personaje cuando camina izq,der.
-				//spr.flip(true);
 				x += VELOCIDAD_X * delta;
 			} else if (entradas.isIrIzq()){
-				//spr.flip(true);
+				//spr.flip();
 				x -= VELOCIDAD_X * delta;
 			}
 		}

@@ -19,7 +19,7 @@ public class Imagen {
 		s.draw(Render.batch);
 	}
 	
-	public void drawAnimacion(TextureRegion frameActual) { //Dibuja el Sprite con la animacion.
+	public void drawAnimacion(TextureRegion frameActual,float x,float y) { //Dibuja el Sprite con la animacion.
 		s.setRegion(frameActual);	//Cambia la textura por el frameActual que le paso.
 		s.draw(Render.batch);	
 	}
@@ -38,7 +38,7 @@ public class Imagen {
 		return this.t;
 	}
 
-	public void flip(boolean x) {	//Rotar sprite. Esto para utilizarlo con el personaje.
-		//s.flip(x, false);
+	public void flip() {	//Rotar sprite. Esto para utilizarlo con el personaje.
+		s.setSize(-t.getWidth(), 0);
 	}
 }

@@ -47,4 +47,9 @@ Proyecto final de la materia "programacion sobre redes".
 - Las animaciones las adaptamos al movimiento, si corre, hace la animacion de correr y si esta quieto, hace la animacion de quieto.
 - La pantalla de carga ya esta terminada (añadimos el logo).
 
+### "cambiando cosas del viewport" - Fecha: 4/08
+
+- Cambiamos cosas del viewport, en 2 de las 3 pantallas del juego.
+- La pantalla del menu la dejamos intacta.
+
 *Los objetivos actuales estaran escritos en el codigo, a medida que los vayamos haciendo los borraremos y pondremos otros.*
