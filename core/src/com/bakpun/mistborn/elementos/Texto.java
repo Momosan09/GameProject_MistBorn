@@ -31,6 +31,9 @@ public class Texto {
 	public void draw() {
 		fuente.draw(Render.batch,this.cadena, this.x, this.y);
 	}
+	public void dispose() {
+		fuente.dispose();
+	}
 	
 	public void setPosicion(float x,float y) {
 		this.x = x;

@@ -52,4 +52,10 @@ Proyecto final de la materia "programacion sobre redes".
 - Cambiamos cosas del viewport, en 2 de las 3 pantallas del juego.
 - La pantalla del menu la dejamos intacta.
 
+### "disposeando y cambie cancion" - Fecha 6/08
+
+- Hicimos dispose() en todas las pantallas. (todo lo que sea texture,spriteBatch,bitMapFont).
+- Cambiamos la cancion que tenia en el menu.
+- Estuvimos comentando algunas cosas.
+
 *Los objetivos actuales estaran escritos en el codigo, a medida que los vayamos haciendo los borraremos y pondremos otros.*

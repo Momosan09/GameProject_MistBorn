@@ -102,7 +102,7 @@ public class Entradas implements InputProcessor{
 	public boolean isIrIzq() {
 		return this.irIzq;
 	}
-	public boolean isSaltar() {
+	public boolean isEspacio() {
 		return this.saltar;
 	}
 	public boolean isAbajo() {

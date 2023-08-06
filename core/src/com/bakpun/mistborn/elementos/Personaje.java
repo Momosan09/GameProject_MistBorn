@@ -19,10 +19,10 @@ public class Personaje {
 	private float duracion = 0.2f,duracionCorrer = 0.15f;
 	private TextureRegion frameActual;
 	
-	public Personaje() {
+	public Personaje(String rutaPj) {
 		entradas = new Entradas();
 		Gdx.input.setInputProcessor(entradas);
- 		spr = new Imagen(Recursos.PERSONAJE_VIN);
+ 		spr = new Imagen(rutaPj);
  		spr.ajustarTamano(2);
 		crearAnimaciones();
 	}
@@ -41,7 +41,7 @@ public class Personaje {
 		
 		update();
 		
-		saltar = (entradas.isSaltar() && !estaSaltando);
+		saltar = (entradas.isEspacio() && !estaSaltando);
 		puedeMoverse = (entradas.isIrDer() != entradas.isIrIzq());	//Si el jugador toca las 2 teclas a la vez no va a poder moverse.
 		estaQuieto = ((!entradas.isIrDer() == !entradas.isIrIzq()) || !puedeMoverse);
 		estaCorriendo = ((entradas.isIrDer() || entradas.isIrIzq()) && puedeMoverse);
@@ -59,6 +59,10 @@ public class Personaje {
 			frameActual = animacionCorrer.getCurrentFrame();
 			spr.drawAnimacion(frameActual,x,y);
 		}
+	}
+	
+	public void dispose() {
+		spr.getTexture().dispose();
 	}
 	
 	private void crearAnimaciones() {

@@ -2,12 +2,14 @@ package com.bakpun.mistborn.pantallas;
 
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.bakpun.mistborn.elementos.Imagen;
+import com.bakpun.mistborn.io.Entradas;
 import com.bakpun.mistborn.utiles.Config;
 import com.bakpun.mistborn.utiles.Recursos;
 import com.bakpun.mistborn.utiles.Render;
@@ -19,13 +21,16 @@ public class PantallaCarga implements Screen {
 	private boolean terminoFadeIn = false,termina = false;
 	private OrthographicCamera camZoom;		//Camara para hacer el zoom y para el viewport.
 	private Viewport vw;
+	private Entradas entradas;
 	
 	public void show() {
 		logo = new Imagen(Recursos.LOGO_MISTBORN);
 		logo.ajustarTamano(-0.5f);
 		camZoom = new OrthographicCamera();
 		camZoom.position.set(new Vector2(logo.getTexture().getWidth()/2,logo.getTexture().getHeight()/2), 0);
-		vw = new FillViewport(Config.ANCHO,Config.ALTO,camZoom); 
+		vw = new FillViewport(Config.ANCHO,Config.ALTO,camZoom);
+		entradas = new Entradas();
+		Gdx.input.setInputProcessor(entradas);
 	}
 	public void render(float delta) {
 		Render.limpiarPantalla(0,0,0);
@@ -37,7 +42,7 @@ public class PantallaCarga implements Screen {
 		Render.batch.begin();
 		logo.draw();
 		Render.batch.end();
-		if(termina) {
+		if(termina || entradas.isEspacio()) {
 			Render.app.setScreen(new PantallaMenu());
 		}
 	}
@@ -77,7 +82,9 @@ public class PantallaCarga implements Screen {
 		
 	}
 	public void dispose() {
-		// TODO Auto-generated method stub
+		logo.getTexture().dispose(); //Texture
+		Render.batch.dispose();		//SpriteBatch.
+		this.dispose();
 	}
 
 }

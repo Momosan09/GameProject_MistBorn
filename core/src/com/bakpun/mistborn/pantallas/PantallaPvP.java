@@ -20,7 +20,7 @@ public class PantallaPvP implements Screen{
 	
 	public void show() {
 		fondo = new Imagen(Recursos.FONDO_PVP);
-		pj = new Personaje();
+		pj = new Personaje(Recursos.PERSONAJE_VIN);
 		cam = new OrthographicCamera();	//Creo una camara para hacer el viewport.
 		cam.position.set(new Vector2(fondo.getTexture().getWidth()/2,fondo.getTexture().getHeight()/2), 0);	//Para posicionar la camara en el centro del fondo. La camara como default esta con coordenadas negativas.
 		vw = new FillViewport(Config.ANCHO,Config.ALTO,cam);
@@ -50,7 +50,6 @@ public class PantallaPvP implements Screen{
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -62,6 +61,9 @@ public class PantallaPvP implements Screen{
 
 	@Override
 	public void dispose() {
-		
+		fondo.getTexture().dispose();	//Texture
+		pj.dispose();	//Texture.
+		Render.batch.dispose();		//SpriteBatch.
+		this.dispose();
 	}
 }

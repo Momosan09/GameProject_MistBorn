@@ -45,8 +45,28 @@ public class PantallaMenu implements Screen {
 	}
 
 	public void render(float delta) {
-		Render.limpiarPantalla((float) 212 / 255, (float) 183 / 255, (float) 117 / 255);	//limpiarPantalla() ahora le tenes que pasar rgb.
-		calcularMovCamara();																//lo divido por 255 porque es del 0 al 1.
+		Render.limpiarPantalla((float) 212 / 255, (float) 183 / 255, (float) 117 / 255);	//limpiarPantalla() ahora le tenes que pasar rgb.Lo divido por 255 porque es del 0 al 1.
+		renderizarFondoMovimiento();
+		seleccion = chequearEntradas(delta);
+		colorearOpcion();
+		renderizarMenu();
+		calcularColisionMouse();
+		calcularEntradasConOpciones();
+	}
+
+	private void renderizarMenu() {
+		camEstatica.update();
+		Render.batch.setProjectionMatrix(camEstatica.combined);	//segundo bloque para hacer la camara estatica.
+		dibujarFigura();	//Dibuja un rectangulo que vendria a ser donde estan las opciones.
+		Render.batch.begin();
+		for (int i = 0; i < opciones.length; i++) {
+			opciones[i].draw();		//Dibuja las opciones.
+		}
+		Render.batch.end();	
+	}
+
+	private void renderizarFondoMovimiento() {
+		calcularMovCamara();																
 		if (reiniciarCam) {		// Esta va a reinciar la camara cuando haya superado el tiempo de muestra. Va a volver al punto de inicio.
 			reiniciarCam = reinciarCamara();
 		}
@@ -55,19 +75,6 @@ public class PantallaMenu implements Screen {
 		Render.batch.begin();
 		fondo.draw();
 		Render.batch.end();
-		
-		seleccion = chequearEntradas(delta);
-		colorearOpcion();
-		camEstatica.update();
-		Render.batch.setProjectionMatrix(camEstatica.combined);	//segundo bloque para hacer la camara estatica.
-		dibujarFigura();	//Dibuja un rectangulo que vendria a ser donde estan las opciones.
-		Render.batch.begin();
-		for (int i = 0; i < opciones.length; i++) {
-			opciones[i].draw();		//Dibuja las opciones.
-		}
-		Render.batch.end();
-		calcularColisionMouse();
-		calcularEntradasConOpciones();
 	}
 
 	/*Este metodo calcula cuando tocara una opcion, hay mucho lio en el segundo if porque pasaba que si una opcion estaba seleccionada 
@@ -75,6 +82,7 @@ public class PantallaMenu implements Screen {
 	private void calcularEntradasConOpciones() {													
 		if(entradas.isEnter() || entradas.isMouseClick()) { 
 			if((seleccion==1 && entradas.isEnter()) || (seleccion == 1 && (entradas.isMouseClick() && estaSobreOpcion))) {
+				sfxOpcion.play();
 				Render.cancionMenu.pause();		//Pauso la cancion del menu.
 				Render.app.setScreen(new PantallaPvP());
 			}else if(seleccion == 3) {
@@ -227,7 +235,12 @@ public class PantallaMenu implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < opciones.length; i++) {
+			opciones[i].dispose();	//BitMapFont
+		}
+		figuraMenu.dispose();		//Shape
+		fondo.getTexture().dispose(); //Texture
+		Render.batch.dispose();		//SpriteBatch.
+		this.dispose();
 	}
 }

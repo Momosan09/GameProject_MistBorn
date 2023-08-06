@@ -14,13 +14,13 @@ public class Animacion {
 
 	public void update(float delta) {
 		tiempo += delta;
-		if (tiempo >= duracionTotal) {		//Si el tiempo es mayor a la duracion total, el tiempo se restara.
+		if (tiempo >= duracionTotal) {		//Si el tiempo es mayor a la duracion total que le asigne , el tiempo se restara por este.
 			tiempo -= duracionTotal;
 		}
 	}
 	
 	public TextureRegion getCurrentFrame() {
-		return animacion.getKeyFrame(tiempo);
+		return animacion.getKeyFrame(tiempo);	//En base a x tiempo te devuelve que frame tendria que ir ahora. 
 	}
 
 }

@@ -2,19 +2,18 @@ package com.bakpun.mistborn;
 
 import com.badlogic.gdx.Game;
 
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.bakpun.mistborn.pantallas.PantallaCarga;
-import com.bakpun.mistborn.pantallas.PantallaPvP;
 import com.bakpun.mistborn.utiles.Render;
 
 public class MistBorn extends Game {
 	
 	public void create() {
-		Render.cancionMenu.play();
-		Render.app = this;
-		Render.batch = new SpriteBatch();
-		//this.setScreen(new PantallaCarga());
-		this.setScreen(new PantallaPvP());
+		Render.cancionMenu.play();	//Reproduzco la cancion aca porque quiero que se escuche en la 2 pantallas diferentes.
+		Render.app = this;			//Asigno a app esta clase para hacer el metodo setScreen() en otras pantallas.
+		Render.batch = new SpriteBatch();	//SpriteBatch unico.
+		this.setScreen(new PantallaCarga());
 	}
 
 	public void render () {
@@ -22,6 +21,7 @@ public class MistBorn extends Game {
 	}
 	
 	public void dispose () {
-		Render.batch.dispose();
+		Render.batch.dispose();		//SpriteBatch.
+		super.dispose();		
 	}
 }
